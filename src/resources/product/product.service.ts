@@ -6,6 +6,7 @@ import HttpException from '../../utils/exception/http.exception';
 class ProductService {
     private productModel = ProductModel;
     private studentModel = StudentModel;
+    private categoryModel = CategoryModel;
 
     public async getAllProduct():Promise<Array<object> | Error> {
         try{
@@ -66,7 +67,18 @@ class ProductService {
         subcategory: string
     ): Promise<object | Error> {
         try {
-            const productList = await this.productModel.find({ 'subcategory': subcategory });
+            console.log("subcategory",subcategory);
+            const category = await this.categoryModel.findOne({'subCategory':{ $elemMatch: { 'subCategoryNameEN': subcategory }}});
+            console.log("cate",category);
+            let categoryname = {};
+            category?.subCategory.filter(item => {
+                if(item.subCategoryNameEN === subcategory) {
+                    categoryname = item.subCategoryName;
+                }
+            })
+
+            const productList = await this.productModel.find({ 'subcategory': categoryname });
+            console.log("productList",productList);
             return productList;        
         }catch(error: any) {
             throw new Error(error.message);

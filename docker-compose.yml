@@ -1,0 +1,24 @@
+version: '3'
+services:
+  nginx_load_balance:
+    image: nginx
+    volumes:
+      - './nginx/default.conf:/etc/nginx/nginx.conf'
+    ports:
+      - '8080:80'
+  app1:
+    image: node-app
+    environment:
+      - apiID=8081
+  app2:
+    image: node-app
+    environment:
+      - apiID=8082
+  app3:
+    image: node-app
+    environment:
+      - apiID=8083
+  app4:
+    image: node-app
+    environment:
+      - apiID=8084
