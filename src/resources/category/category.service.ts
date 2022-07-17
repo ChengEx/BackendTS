@@ -3,7 +3,7 @@ import CategoryModel from './category.model';
 class CategoryService {
     private categoryModel = CategoryModel;
 
-    public async getAll(): Promise<object | Error> {
+    public async getAllCategory(): Promise<object | Error> {
         try{
             const categoryArray = await this.categoryModel.find();
             return categoryArray;    

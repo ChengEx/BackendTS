@@ -56,7 +56,10 @@ class ProductService {
         category: string
     ): Promise<object | Error> {
         try {
-            const productList = await this.productModel.find({ 'category': category });
+            console.log("category",category);
+            const categoryObj = await this.categoryModel.findOne({ 'categoryNameEN': category });
+            console.log("cate1",categoryObj);
+            const productList = await this.productModel.find({ 'category': categoryObj?.categoryName });
             return productList;
         }catch(error: any) {
             throw new Error(error.message);
@@ -67,9 +70,7 @@ class ProductService {
         subcategory: string
     ): Promise<object | Error> {
         try {
-            console.log("subcategory",subcategory);
-            const category = await this.categoryModel.findOne({'subCategory':{ $elemMatch: { 'subCategoryNameEN': subcategory }}});
-            console.log("cate",category);
+            const category = await this.categoryModel.findOne({'subCategory':{ $elemMatch: { 'subCategoryNameEN': subcategory }}});        
             let categoryname = {};
             category?.subCategory.filter(item => {
                 if(item.subCategoryNameEN === subcategory) {

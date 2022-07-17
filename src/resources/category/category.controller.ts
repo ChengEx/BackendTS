@@ -12,17 +12,17 @@ class CategoryController implements IController {
     }
     private initialseRoutes(): void {
         this.router.get(
-            `${this.path}/getAll`,
-            this.getAll
+            `${this.path}/getAllCategory`,
+            this.getAllCategory
         );
         this.router.post(
             `${this.path}/getCategoryByPath`,
             this.getCategoryByPath
         )
     }
-    private getAll = async(req: Request, res: Response, next: NextFunction): Promise<Response | void> =>{
+    private getAllCategory = async(req: Request, res: Response, next: NextFunction): Promise<Response | void> =>{
         try {
-            const categoryObj = await this.categoryService.getAll();
+            const categoryObj = await this.categoryService.getAllCategory();
             res.status(200).json({ categoryObj });
         }catch(error: any){
             next(new HttpException(400, error.message));
