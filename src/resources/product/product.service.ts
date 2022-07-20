@@ -56,9 +56,9 @@ class ProductService {
         category: string
     ): Promise<object | Error> {
         try {
-            console.log("category",category);
+            //console.log("category",category);
             const categoryObj = await this.categoryModel.findOne({ 'categoryNameEN': category });
-            console.log("cate1",categoryObj);
+            //console.log("cate1",categoryObj);
             const productList = await this.productModel.find({ 'category': categoryObj?.categoryName });
             return productList;
         }catch(error: any) {
@@ -67,19 +67,19 @@ class ProductService {
     }
 
     public async getProductListBySubCategory(
+        category: string,
         subcategory: string
     ): Promise<object | Error> {
         try {
-            const category = await this.categoryModel.findOne({'subCategory':{ $elemMatch: { 'subCategoryNameEN': subcategory }}});        
+            const categoryObj = await this.categoryModel.findOne({'categoryNameEN': category });        
+            console.log(categoryObj);
             let categoryname = {};
-            category?.subCategory.filter(item => {
+            categoryObj?.subCategory.filter(item => {
                 if(item.subCategoryNameEN === subcategory) {
                     categoryname = item.subCategoryName;
                 }
             })
-
-            const productList = await this.productModel.find({ 'subcategory': categoryname });
-            console.log("productList",productList);
+            const productList = await this.productModel.find({ 'category': categoryObj?.categoryName,'subcategory': categoryname });
             return productList;        
         }catch(error: any) {
             throw new Error(error.message);

@@ -66,7 +66,7 @@ class ProductController implements IController {
                 price,
                 status
             )
-            console.log("res",addProductObj);
+            //console.log("res",addProductObj);
             res.status(200).json({ addProductObj });
         }catch(error: any){
             next(new HttpException(400, error.message));
@@ -84,9 +84,9 @@ class ProductController implements IController {
 
     private getProductListBySubCategory = async(req: Request, res: Response, next: NextFunction): Promise<Response | void> => {
         try {
-            const { subcategory } = req.body;
-            console.log(req.body);
-            const returnObjList = await this.productService.getProductListBySubCategory(subcategory);
+            const { category, subcategory } = req.body;
+            //console.log(req.body);
+            const returnObjList = await this.productService.getProductListBySubCategory(category, subcategory);
             res.status(200).json({ returnObjList });
         }catch(error: any) {
             next(new HttpException(400,error.message));
@@ -104,7 +104,7 @@ class ProductController implements IController {
 
     private getProductListByUserId = async(req: Request, res: Response, next: NextFunction): Promise<Response | void> => {
         try {
-            console.log(req.body);
+            //console.log(req.body);
             const { _id } = req.body;
             const getProductList = await this.productService.getProductListByUserId(_id);
             res.status(200).json({ getProductList });
