@@ -20,6 +20,12 @@ const StudentSchema:Schema = new Schema({
             ref: "products"
         }
     ],
+    collectionProductId: [
+        {
+            type: mongoose.Types.ObjectId,
+            ref: "products"
+        }
+    ]
     
 },
     { timestamps: true }

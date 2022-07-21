@@ -160,10 +160,10 @@ class ProductService {
             const deleteObj = await this.productModel.findByIdAndDelete({_id});
             const deleteStudentProduct = await this.studentModel.updateOne({_id: userId},
                 { $pull:{
-                    productDetail:{
-                        images:_id
+                    productId:{
+                        $in: [ _id ] 
                     }
-                }}
+                } }
             );
             let returnDeleteObj = {};
             if(deleteObj !== null) {

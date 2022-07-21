@@ -135,6 +135,25 @@ class StudentService {
             throw new Error(error.message);
         }
     }
+    public async getCollectionById(
+        userId: string
+    ): Promise<object | Error> {
+        try{
+            const userCollection = await this.studentModel.findById({ _id: userId })
+                .select('collectionProductId')
+                .populate('collectionProductId');
+            console.log(userCollection);
+            let returnObj = {};
+            if(userCollection !== null) {
+                returnObj = userCollection.toObject();
+            }
+            return returnObj;
+        }
+        catch(error: any) {
+            return Error(error.message);
+        }
+        
+    }
 
 
 }

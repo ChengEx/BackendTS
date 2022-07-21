@@ -23,6 +23,10 @@ class StudentController implements IController {
             this.register
         );
         this.router.post(
+            `${this.path}/changePassword`,
+            this.changePassword
+        );
+        this.router.post(
             `${this.path}/getPersonalInformation`,
             validationMiddleware(validate.getPersonalInformation),
             this.getPersonalInformation
@@ -31,10 +35,7 @@ class StudentController implements IController {
             `${this.path}/updateInformation`,
             this.updateInformation
         );
-        this.router.post(
-            `${this.path}/changePassword`,
-            this.changePassword
-        )
+        
         
     }
     private login = async(req: Request, res: Response, next: NextFunction): Promise<Response | void> => {
@@ -73,6 +74,22 @@ class StudentController implements IController {
             next(new HttpException(400, error.message));
         }
     };
+    private changePassword = async(req: Request, res: Response, next: NextFunction): Promise<Response | void> => {
+        try {
+            const { _id, oldPassword, newPassword } = req.body;
+            const returnObj = await this.studentService.changePassword(
+                _id,
+                oldPassword,
+                newPassword
+            )
+            if(returnObj instanceof Error){
+                throw new Error(returnObj.message);
+            }
+            res.status(201).json({ returnObj });
+        }catch(error: any){
+            next(new HttpException(400, error.message));
+        }
+    }
 
     private getPersonalInformation = async(req: Request, res: Response, next: NextFunction): Promise<Response | void> => {
         try {
@@ -104,23 +121,6 @@ class StudentController implements IController {
             }
             res.status(201).json({ beforeUpdateObj });
         }catch(error: any) {
-            next(new HttpException(400, error.message));
-        }
-    }
-
-    private changePassword = async(req: Request, res: Response, next: NextFunction): Promise<Response | void> => {
-        try {
-            const { _id, oldPassword, newPassword } = req.body;
-            const returnObj = await this.studentService.changePassword(
-                _id,
-                oldPassword,
-                newPassword
-            )
-            if(returnObj instanceof Error){
-                throw new Error(returnObj.message);
-            }
-            res.status(201).json({ returnObj });
-        }catch(error: any){
             next(new HttpException(400, error.message));
         }
     }
