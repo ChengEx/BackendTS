@@ -42,13 +42,15 @@ class StudentService {
 
             const hashedPassword = await bcrypt.hash(password, 12)
             console.log("hashedPassword",hashedPassword);
+            const authority = "0";
             const user = await this.studentModel.create({
                 username,
                 password: hashedPassword,
                 name,
                 email,
                 gender,
-                phone
+                phone,
+                authority
             });
 
             const accessToken = token.createToken(user);

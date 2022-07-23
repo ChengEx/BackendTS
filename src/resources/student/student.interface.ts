@@ -11,11 +11,6 @@ export default interface IStudent extends Document{
         city: string,
         street: string
     },
-    productId: [string]
-    // productId: [
-    //     {
-    //         type: mongoose.Types.ObjectId,
-    //         ref: "products"
-    //     }
-    // ],
+    productId: [string],
+    collectionProductId: [string]
 }

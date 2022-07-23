@@ -14,6 +14,7 @@ const StudentSchema:Schema = new Schema({
         city:{ type: String },
         street:{ type: String }
     },
+    authority: { type: String, required: true },
     productId: [
         {
             type: mongoose.Types.ObjectId,
