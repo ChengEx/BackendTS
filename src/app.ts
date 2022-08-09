@@ -62,9 +62,14 @@ class App {
     }
 
     public listen(): void {
-        this.express.listen(this.port, () => {
-            console.log(`App listening on the port ${this.port}`);
+        let server = require('http').createServer(this.express);
+        server.listen(this.port, () => {
+            console.log(`Listening on port ${this.port}`);
         });
+
+        // this.express.listen(this.port, () => {
+        //     console.log(`App listening on the port ${this.port}`);
+        // });
     }
 }
 

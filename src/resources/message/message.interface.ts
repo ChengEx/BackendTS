@@ -1,7 +1,6 @@
-import { Document } from 'mongoose';
+import { Document, ObjectId } from 'mongoose';
 
 export default interface IMessage extends Document{
-    message: string,
-    otherStudents: [string],
-    sender: string
+    userId: ObjectId,
+    message: string
 }
