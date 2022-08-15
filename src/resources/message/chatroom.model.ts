@@ -10,6 +10,15 @@ const ChatroomSchema: Schema = new Schema({
         type: mongoose.Types.ObjectId,
         ref: "students"
     },
+    productId: {
+        type: mongoose.Types.ObjectId,
+        ref: "products"
+    },
+    message:[{
+        userId: { type: String, required: true },
+        content: { type: String, required: true },
+        time: { type: Date, required: true }
+    }]
 },
     {timestamps: true}
 )
