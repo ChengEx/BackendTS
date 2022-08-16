@@ -14,15 +14,15 @@ class MessageController implements IController {
         this.router.post(
             `${this.path}/getChatRoomById`,
             this.getChatRoomById
-        )
+        );
+        this.router.post(
+            `${this.path}/getChatRoomByUserId`,
+            this.getChatRoomByUserId
+        );
         this.router.post(
             `${this.path}/addChatRoom`,
             this.addChatRoom
-        )
-        // this.router.post(
-        //     `${this.path}/getMessgeByRoomId`,
-
-        // );
+        );
         this.router.post(
             `${this.path}/addMessageByRoomId`,
             this.addMessageByRoomId
@@ -31,12 +31,22 @@ class MessageController implements IController {
     }
     private getChatRoomById = async(req:Request, res:Response, next: NextFunction): Promise<Response | void> => {
         try {
-            const { _id } = req.body;
-            const returnObj = await this.messageService.getChatRoomById(_id);
+            const { _id, productId } = req.body;
+            const returnObj = await this.messageService.getChatRoomById(_id, productId);
             res.status(200).json({returnObj});
         }catch(error: any) {
             next(new HttpException(400, error.message));
         }  
+    }
+
+    private getChatRoomByUserId = async(req: Request, res: Response, next: NextFunction): Promise<Response | void> => {
+        try {
+            const { userId } = req.body;
+            const returnObj = await this.messageService.getChatRoomByUserId(userId);
+            res.status(200).json({returnObj});
+        }catch(error: any) {
+            next(new HttpException(400, error.message));
+        }
     }
     private addChatRoom = async(req: Request, res: Response, next: NextFunction): Promise<Response | void> => {
         try {
@@ -50,10 +60,7 @@ class MessageController implements IController {
     }
 
 
-    // private getMessgeByRoomId = async(req: Request, res: Response, next: NextFunction): Promise<Response | Error> => {
-    //     const { _id } = req.body;
-
-    // }
+   
     private addMessageByRoomId = async(req: Request, res: Response, next: NextFunction): Promise<Response | void> => {
         try {
             const { _id, userId, content, time } = req.body;
