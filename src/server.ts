@@ -4,6 +4,7 @@ import CategoryController from './resources/category/category.controller';
 import CollectionController from './resources/collection/collection.controller';
 import AnnouncementController from './resources/announcement/announcement.controller';
 import MessageController from './resources/message/message.controller';
+import OrderController from './resources/order/order.controller';
 import dotenv from 'dotenv';
 import { Router, Request, Response, NextFunction } from 'express';
 
@@ -11,7 +12,7 @@ import App from './app';
 dotenv.config();
 console.log(process.env.apiID)
 const app = new App(
-    [new StudentController(), new ProductController(), new CategoryController(), new CollectionController(), new AnnouncementController(), new MessageController()],
+    [new StudentController(), new ProductController(), new CategoryController(), new CollectionController(), new AnnouncementController(), new MessageController(), new OrderController()],
     <any>process.env.apiID || 4000
 )
 
