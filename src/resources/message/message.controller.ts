@@ -32,6 +32,7 @@ class MessageController implements IController {
     private getChatRoomById = async(req:Request, res:Response, next: NextFunction): Promise<Response | void> => {
         try {
             const { _id, productId } = req.body;
+            console.log(req.body);
             const returnObj = await this.messageService.getChatRoomById(_id, productId);
             res.status(200).json({returnObj});
         }catch(error: any) {

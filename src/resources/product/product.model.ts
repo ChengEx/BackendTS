@@ -13,12 +13,13 @@ const ProductSchema: Schema = new Schema({
         ],
         description: { type: String, required: true },
         price: { type: Number, required: true },
-        status: { type: String, required: true }
+       
     },
     createdBy: { 
         type: mongoose.Types.ObjectId,
         ref: "students"
-    }
+    },
+    status: { type: Boolean, required: true }
     // productId: [
     //     {
     //         type: mongoose.Types.ObjectId,

@@ -20,9 +20,14 @@ class OrderController implements IController {
             this.getShopOrder
         );
         this.router.post(
-            `${this.path}/addOrder`,
+            `${this.
+                path}/addOrder`,
             this.addOrder
         );
+        this.router.post(
+            `${this.path}/updateOrderStatus`,
+            this.updateOrderStatus
+        )
         
     }
 
@@ -50,6 +55,16 @@ class OrderController implements IController {
             const { buyerId, sellerId, productId } = req.body;
             
             const returnObj = await this.orderService.addOrder(buyerId, sellerId, productId);
+            res.status(200).json({returnObj});
+        }catch(error: any) {
+            next(new HttpException(400, error.message));
+        }
+    }
+
+    private updateOrderStatus = async(req: Request, res: Response, next: NextFunction): Promise<Response | void> => {
+        try {
+            const { orderId, status } = req.body;
+            const returnObj = await this.orderService.updateOrderStatus(orderId, status);
             res.status(200).json({returnObj});
         }catch(error: any) {
             next(new HttpException(400, error.message));

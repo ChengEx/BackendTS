@@ -39,7 +39,8 @@ class ProductService {
                     price,
                     status
                 },
-                createdBy:_id
+                createdBy:_id,
+                status: true
             });
 
             const addStudentProductId = await this.studentModel.findByIdAndUpdate(
@@ -59,7 +60,7 @@ class ProductService {
             //console.log("category",category);
             const categoryObj = await this.categoryModel.findOne({ 'categoryNameEN': category });
             //console.log("cate1",categoryObj);
-            const productList = await this.productModel.find({ 'category': categoryObj?.categoryName });
+            const productList = await this.productModel.find({ 'category': categoryObj?.categoryName, 'status': true });
             return productList;
         }catch(error: any) {
             throw new Error(error.message);
@@ -79,7 +80,7 @@ class ProductService {
                     categoryname = item.subCategoryName;
                 }
             })
-            const productList = await this.productModel.find({ 'category': categoryObj?.categoryName,'subcategory': categoryname });
+            const productList = await this.productModel.find({ 'category': categoryObj?.categoryName,'subcategory': categoryname, 'status': true });
             return productList;        
         }catch(error: any) {
             throw new Error(error.message);

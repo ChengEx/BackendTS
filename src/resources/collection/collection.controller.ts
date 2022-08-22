@@ -47,8 +47,8 @@ class CollectionController implements IController {
     }
     private deleteCollection = async(req: Request, res: Response, next: NextFunction): Promise<Response | void> => {
         try {
-            const { productId, userId } = req.body;
-            const returnObj = await this.collectionService.deleteCollection(productId, userId);
+            const { collectionId, userId } = req.body;
+            const returnObj = await this.collectionService.deleteCollection(collectionId, userId);
             res.status(200).json({ returnObj });
         }catch(error: any){
             next(new HttpException(400, error.message));

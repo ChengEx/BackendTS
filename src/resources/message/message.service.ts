@@ -11,6 +11,7 @@ class MessageService {
     ): Promise<object | Error> {
         try {
             const chatroom = await this.chatroomModel.findOne({user1Id: _id, productId}).populate('user1Id').populate('user2Id').populate('productId');
+            console.log(chatroom);
             let returnChatroom = {}
             if(chatroom !== null){
                 returnChatroom = chatroom.toObject();
@@ -40,7 +41,7 @@ class MessageService {
     ): Promise<object | Error> {
         try {
             const chatroomCheck = await this.chatroomModel.findOne({ user1Id, user2Id, productId });
-            //console.log(chatroomCheck);
+            console.log(chatroomCheck);
             let returnObj = {};          
             if(!chatroomCheck) {
                 const addchatroom = await this.chatroomModel.create({

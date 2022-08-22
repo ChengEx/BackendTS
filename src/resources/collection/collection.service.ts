@@ -10,8 +10,8 @@ class CollectionService {
     ): Promise<object | Error> {
         try {
             const collctionObj = await this.collectionModel.create({
-                productId,
-                userId
+                userId,
+                productId
             });
             const addStudentCollectionProductId = await this.studentModel.findByIdAndUpdate(
                 userId, {
@@ -25,16 +25,17 @@ class CollectionService {
     }
 
     public async deleteCollection(
-        productId: string,
+        collectionId: string,
         userId: string
     ):Promise<object | Error> {
         try {
-            await this.collectionModel.findByIdAndDelete({ _id: userId });
+            await this.collectionModel.findOneAndDelete({ userId: userId, productId: collectionId });
+
             await this.studentModel.updateOne({ _id: userId },
                 {
                     $pull:{
                         collectionProductId:{
-                            $in: [ productId ] 
+                            $in: [ collectionId ] 
                         }
                     }
                 });
